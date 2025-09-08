@@ -53,6 +53,7 @@ Start the Client
 ```
 #########
 
+```
 import React, { useState, useMemo, useRef, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -233,10 +234,4 @@ export default function CheckerInboxTable() {
     </div>
   );
 }
-
-  
-
-
-
-
-  
+```
