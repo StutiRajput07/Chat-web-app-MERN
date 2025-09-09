@@ -129,6 +129,7 @@ export default function CheckerQueue() {
   return (
     <div className="checker-queue-wrap">
       <div className="cq-header">
+        <div className="cq-title">Ops Checker Queue</div>
         <div className="cq-search-wrap">
           <input
             type="search"
@@ -139,9 +140,8 @@ export default function CheckerQueue() {
             aria-label="Search by transaction reference number"
           />
         </div>
-
-        <div className="cq-title">Ops Checker Queue</div>
       </div>
+      <hr className="cq-divider" />
 
       <div className="cq-table-wrap">
         <table className="cq-table" role="table" aria-label="Ops Checker Queue table">
@@ -170,8 +170,8 @@ export default function CheckerQueue() {
             ) : (
               filtered.map((row) => (
                 <tr key={row.txnRef} className="cq-row" tabIndex={0}>
-                  <td className="cq-cell txn">{row.txnRef}</td>
-                  <td className="cq-cell loan">{row.loanId}</td>
+                  <td className="cq-cell txn bold">{row.txnRef}</td>
+                  <td className="cq-cell loan bold">{row.loanId}</td>
                   <td className="cq-cell applicant">{row.applicant}</td>
                   <td className="cq-cell amount">{row.amount.toLocaleString()}</td>
                   <td className="cq-cell currency">{row.currency}</td>
@@ -197,139 +197,64 @@ export default function CheckerQueue() {
 ```
 /* CheckerQueue.css - custom styles for CheckerQueue.js */
 
-/* Container */
+/* Font family */
 .checker-queue-wrap {
-  max-width: 1100px;
-  margin: 28px auto;
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 18px;
-  box-shadow: 0 6px 18px rgba(10, 35, 77, 0.08);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-family: "Trebuchet MS", Verdana, sans-serif;
 }
 
-/* Header: search (left) and title on same line */
+/* Header */
 .cq-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
-  flex-wrap: nowrap;
+  margin-bottom: 6px;
 }
-
-/* Search box on left side of heading */
-.cq-search-wrap {
-  flex: 0 0 320px; /* fixed width for search */
-}
-.cq-search {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #d0d7e0;
-  border-radius: 4px;
-  font-size: 14px;
-  outline: none;
-  transition: box-shadow 0.15s ease, border-color 0.15s ease;
-}
-.cq-search:focus {
-  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.12);
-  border-color: #5b9cff;
-}
-
-/* Title to the right of search (same line) */
 .cq-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #16325c;
-  margin-left: 6px;
+  font-size: 20px;
+  font-weight: 700;
+  color: #053a89;
 }
 
-/* Table wrapper for horizontal scroll on small screens */
-.cq-table-wrap {
-  overflow-x: auto;
+/* Divider */
+.cq-divider {
+  border: none;
+  border-top: 3px solid #053a89;
+  margin-bottom: 16px;
 }
 
-/* Table base */
-.cq-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 1000px; /* ensure horizontal scroll when needed */
+/* Search box */
+.cq-search {
+  border: 2px solid #053a89;
+  color: #053a89;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 4px;
+  outline: none;
+}
+.cq-search::placeholder {
+  color: #3d6ab7;
 }
 
-/* Table head */
+/* Bold cells */
+.cq-cell.bold {
+  font-weight: 700;
+}
+/* Table header */
 .cq-thead th {
-  background-color: #053a89; /* deep blue header */
-  color: #ffffff;
-  text-align: left;
-  font-size: 13px;
-  font-weight: 600;
-  padding: 10px 12px;
-  border-bottom: 2px solid rgba(0,0,0,0.06);
-  white-space: nowrap;
+  font-size: 12px;   /* smaller font for header cells */
+  padding: 8px 10px; /* more compact rows */
 }
 
 /* Table body cells */
-.cq-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #eef1f6;
-  font-size: 14px;
-  color: #1f2d3d;
-  vertical-align: middle;
-  white-space: nowrap;
+.cq-cell {
+  font-size: 12px;   /* smaller font for table rows */
+  padding: 8px 10px;
 }
 
-/* Make the whole row change on hover */
-.cq-row {
-  cursor: pointer;
-  transition: background-color 0.12s ease;
+/* Bold cells */
+.cq-cell.bold {
+  font-weight: 700;
 }
-.cq-row:hover td {
-  background-color: #f4f9ff; /* light blue on hover — change if needed */
-}
-
-/* Optional: keyboard focus look */
-.cq-row:focus {
-  outline: 2px solid rgba(5, 58, 137, 0.18);
-  outline-offset: -2px;
-}
-
-/* Empty state row */
-.cq-empty-row td {
-  padding: 28px 12px;
-  text-align: center;
-  color: #6b7280;
-  font-style: italic;
-}
-
-/* Small responsive tweak */
-@media (max-width: 720px) {
-  .cq-search-wrap {
-    flex: 1 1 48%;
-  }
-  .cq-title {
-    font-size: 16px;
-  }
-  .cq-table {
-    min-width: 900px;
-  }
-}
-/* Status colors */
-.cq-cell.status.pending {
-  color: #856404;
-  background-color: #fff3cd;
-  font-weight: 600;
-}
-
-.cq-cell.status.approved {
-  color: #155724;
-  background-color: #d4edda;
-  font-weight: 600;
-}
-
-.cq-cell.status.rejected {
-  color: #721c24;
-  background-color: #f8d7da;
-  font-weight: 600;
-} 
 ```
 
 
